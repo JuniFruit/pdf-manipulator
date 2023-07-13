@@ -7,3 +7,4 @@ edition = "2021"
 
 [dependencies]
 lopdf = "0.31.0"
+pdf-extract = "0.6.5"
