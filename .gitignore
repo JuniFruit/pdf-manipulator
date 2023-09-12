@@ -1,6 +1,3 @@
 target
-.idea/*
-Cargo.lock
-tests/docs_cache
-/*.pdf
-/*.txt
+files
+*.pdf

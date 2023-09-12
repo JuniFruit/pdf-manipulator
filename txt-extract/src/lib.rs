@@ -1740,6 +1740,12 @@ impl<'a> Processor<'a> {
                         panic!("unexpected Tj operand {:?}", operation)
                     }
                 },
+                "'" => match operation.operands[0] {
+                    Object::String(ref s, _) => show_text(&mut gs, s, &tlm, &flip_ctm, output)?,
+                    _ => {
+                        panic!("unexpected Tj operand {:?}", operation)
+                    }
+                },
                 "Tc" => {
                     gs.ts.character_spacing = as_num(&operation.operands[0]);
                 }

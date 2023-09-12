@@ -1,0 +1,27 @@
+[package]
+authors = ["Jeff Muizelaar <jmuizelaar@mozilla.com>"]
+description = "A library to extract content from pdfs"
+documentation = "https://docs.rs/crate/pdf-extract/"
+edition = "2018"
+keywords = ["pdf2text", "text", "pdf", "pdf2txt"]
+license = "MIT"
+name = "pdf-extract"
+repository = "https://github.com/jrmuizel/pdf-extract"
+version = "0.6.5"
+include = ["src/**/*", "README.md"]
+
+[profile.release]
+debug = true
+
+[dependencies]
+adobe-cmap-parser = "0.3.3"
+encoding = "0.2.33"
+euclid = "0.20.5"
+linked-hash-map = "=0.5.3"
+lopdf = "0.31.0"
+postscript = "0.14"
+type1-encoding-parser = "0.1.0"
+unicode-normalization = "0.1.19"
+
+[dev-dependencies]
+ureq = "2.6.2"

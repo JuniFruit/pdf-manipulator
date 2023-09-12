@@ -1,9 +1,6 @@
-use std::{collections::BTreeMap, error::Error, fmt::format};
-
-use lopdf::{dictionary, Dictionary, Document, Object};
-
 use self::reading::find_pages_with_term;
-
+use crate::img::PdfImage;
+use lopdf::{dictionary, Dictionary, Document, Object};
 pub mod reading;
 
 /// Save provided pages as a separate pdf file
@@ -61,17 +58,6 @@ pub fn add_text_annot(
     Ok(())
 }
 
-pub fn annotate_term(doc_file: &Document, term: &str) {
-    let pages = find_pages_with_term(doc_file, term);
-
-    for (p_num, id) in pages {
-        let page = doc_file
-            .get_object_page(id)
-            .map_err(|err| println!("Couldn't get page object: {}", err))
-            .unwrap();
-    }
-}
-
 /// Extracts pages with given search query and saves them as a separate pdf file
 pub fn save_pages_with_term(doc_file: &Document, term: &str) -> Result<(), Box<&'static str>> {
     let pages: Vec<u32> = find_pages_with_term(doc_file, term)
@@ -84,4 +70,17 @@ pub fn save_pages_with_term(doc_file: &Document, term: &str) -> Result<(), Box<&
     }
     extract_and_save_pages(doc_file, &pages, "./").or(Err(Box::new("Error saving pages")))?;
     Ok(())
+}
+
+pub fn get_from_dict<'a>(
+    doc_file: &'a Document,
+    dict: &Dictionary,
+    key: &[u8],
+) -> Option<&'a Dictionary> {
+    let res = dict
+        .get(key)
+        .and_then(|parent| parent.as_reference())
+        .and_then(|id| doc_file.get_dictionary(id))
+        .ok();
+    res
 }
